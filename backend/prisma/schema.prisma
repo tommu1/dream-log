@@ -1,0 +1,87 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id          String    @id @default(uuid())
+  email       String    @unique
+  username    String    @unique
+  password    String
+  displayName String?
+  bio         String?   @db.Text
+  avatarUrl   String?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  dreams    Dream[]
+  comments  Comment[]
+  likes     Like[]
+  followers Follow[]   @relation("Following")
+  following Follow[]   @relation("Followers")
+}
+
+model Dream {
+  id        String   @id @default(uuid())
+  title     String
+  content   String   @db.Text
+  isPublic  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  userId String
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  tags     Tag[]
+  comments Comment[]
+  likes    Like[]
+
+  @@index([userId])
+}
+
+model Tag {
+  name   String  @id
+  dreams Dream[]
+}
+
+model Comment {
+  id        String   @id @default(uuid())
+  content   String   @db.Text
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  userId  String
+  user    User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  dreamId String
+  dream   Dream  @relation(fields: [dreamId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([dreamId])
+}
+
+model Like {
+  userId  String
+  user    User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  dreamId String
+  dream   Dream  @relation(fields: [dreamId], references: [id], onDelete: Cascade)
+
+  @@id([userId, dreamId])
+  @@index([userId])
+  @@index([dreamId])
+}
+
+model Follow {
+  followerId  String
+  follower    User   @relation("Following", fields: [followerId], references: [id], onDelete: Cascade)
+  followingId String
+  following   User   @relation("Followers", fields: [followingId], references: [id], onDelete: Cascade)
+  createdAt   DateTime @default(now())
+
+  @@id([followerId, followingId])
+  @@index([followerId])
+  @@index([followingId])
+} 

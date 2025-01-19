@@ -1,0 +1,33 @@
+{
+  "name": "dream-log-backend",
+  "version": "1.0.0",
+  "description": "Dream Log backend API",
+  "main": "src/index.ts",
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "typeorm": "typeorm-ts-node-commonjs",
+    "migration:generate": "npm run typeorm migration:generate -- -d src/config/database.ts",
+    "migration:run": "npm run typeorm migration:run -- -d src/config/database.ts",
+    "migration:revert": "npm run typeorm migration:revert -- -d src/config/database.ts"
+  },
+  "dependencies": {
+    "@hono/node-server": "^1.8.2",
+    "bcryptjs": "^2.4.3",
+    "hono": "^4.0.9",
+    "jsonwebtoken": "^9.0.2",
+    "mysql2": "^3.12.0",
+    "reflect-metadata": "^0.2.2",
+    "typeorm": "^0.3.20",
+    "zod": "^3.22.4"
+  },
+  "devDependencies": {
+    "@types/bcryptjs": "^2.4.6",
+    "@types/jsonwebtoken": "^9.0.6",
+    "@types/node": "^20.11.24",
+    "ts-node": "^10.9.2",
+    "tsx": "^4.7.1",
+    "typescript": "^5.3.3"
+  }
+}

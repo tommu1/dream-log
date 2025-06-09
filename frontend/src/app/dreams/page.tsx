@@ -12,6 +12,14 @@ const Container = styled.div`
   max-width: 768px;
   margin: 0 auto;
   padding: 2rem;
+  
+  @media (max-width: 768px) {
+    padding: 2rem 2rem;
+  }
+  
+  @media (max-width: 640px) {
+    padding: 2rem 1.5rem;
+  }
 `;
 
 const Title = styled.h1`

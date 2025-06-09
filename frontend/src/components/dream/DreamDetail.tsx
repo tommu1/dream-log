@@ -95,6 +95,20 @@ const Actions = styled.div`
 
 const LikeButton = styled(Button)<{ $isLiked: boolean }>`
   color: ${props => (props.$isLiked ? '#ef4444' : '#6b7280')};
+  background-color: ${props => (props.$isLiked ? '#fecaca' : '#f3f4f6')};
+
+  &:hover {
+    background-color: ${props => (props.$isLiked ? '#fca5a5' : '#e5e7eb')};
+  }
+
+  span {
+    color: white;
+    background-color: ${props => (props.$isLiked ? '#ef4444' : '#9ca3af')};
+    padding: 0.125rem 0.375rem;
+    border-radius: 9999px;
+    font-size: 0.875rem;
+    margin-left: 0.25rem;
+  }
 `;
 
 export function DreamDetail({ dream }: DreamDetailProps) {
@@ -167,9 +181,8 @@ export function DreamDetail({ dream }: DreamDetailProps) {
 
       <Actions>
         <LikeButton $variant='outline' $isLiked={isLiked} onClick={handleLike}>
-          {isLiked ? '❤️' : '🤍'} {dream._count?.likes || 0}
+          {isLiked ? '❤️' : '🤍'} <span>{dream._count?.likes || 0}</span>
         </LikeButton>
-        <Button $variant='outline'>💭 {dream._count?.comments || 0}</Button>
       </Actions>
     </Container>
   );

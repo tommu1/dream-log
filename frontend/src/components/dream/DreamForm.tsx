@@ -19,6 +19,12 @@ const Form = styled.form`
   border-radius: 0.5rem;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   margin-bottom: 2rem;
+  width: 100%;
+  box-sizing: border-box;
+  
+  @media (max-width: 640px) {
+    padding: 1rem;
+  }
 `;
 
 const FormGroup = styled.div`
